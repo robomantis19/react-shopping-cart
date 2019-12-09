@@ -4,10 +4,15 @@ import React from 'react';
 import Item from './ShoppingCartItem';
 
 const ShoppingCart = props => {
-	const getCartTotal = () => {
-		return props.cart.reduce((acc, value) => {
-			return acc + value.price;
-		}, 0).toFixed(2);
+	 const getCartTotal = () => {
+		// if(props.cart.length > 0){
+		    return props.cart.reduce((acc, value) => {
+				return acc + value.price;
+			}, 0).toFixed(2)
+		// } else{ 
+		// 	return false;
+		
+		// }
 	};
 
 	return (
