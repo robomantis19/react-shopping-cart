@@ -8,19 +8,28 @@ import Products from './components/Products';
 import ShoppingCart from './components/ShoppingCart';
 import { ProductContext} from './contexts/ProductContext'; 
 import { CartContext } from './contexts/CartContext'; 
-import ShoppingCartItem from './components/ShoppingCart'; 
+import { useShoppingHistory } from './hooks/useShoppingHistory';
+
 function App() {
 	const [products] = useState(data);
 	const [cart, setCart] = useState([]);
+	const [hist, HistListHook] = useShoppingHistory('books', [])
 
 	const addItem = item => {
 		// add the given item to the cart
 		
+		// setCart([...cart, item])
+		HistListHook([...cart, item])
 		setCart([...cart, item])
-		
 	};
+	
+		
+			// HistListHook(cart)
+	 
+	console.log('hist', hist);
+	
 	const removeItem = Id => { 
-		return setCart(cart.filter(input => (
+		return HistListHook(hist.filter(input => (
 			input.id !== Id	
 		)))
 		
@@ -34,7 +43,7 @@ function App() {
 			<ProductContext.Provider value = {{products, addItem}}>
 				<Route exact path="/" component = {Products}/>
 			</ProductContext.Provider>
-			<CartContext.Provider value = {{cart, removeItem}}>
+			<CartContext.Provider value = {{hist, removeItem}}>
 				<Route path="/cart" component = {ShoppingCart}/>
 			</CartContext.Provider>
 
